@@ -10,9 +10,8 @@
 	<!-- DispatcherServlet Context: defines this servlet's request-processing 
 		infrastructure -->
 
-	<!-- Enables the Spring MVC @Controller programming model -->
 	<mvc:annotation-driven />
-	
+
 	<mvc:view-controller path="home.html" view-name="home" />
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving 
@@ -30,7 +29,7 @@
 	<bean id="templateEngine" class="org.thymeleaf.spring3.SpringTemplateEngine">
 		<property name="templateResolver" ref="templateResolver" />
 	</bean>
-	
+
 	<bean class="org.thymeleaf.spring3.view.ThymeleafViewResolver">
 		<property name="templateEngine" ref="templateEngine" />
 		<property name="characterEncoding" value="UTF-8" />

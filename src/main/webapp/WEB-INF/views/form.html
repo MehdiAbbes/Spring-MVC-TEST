@@ -21,7 +21,11 @@
 			<td><label for="date">Enter some date : </label></td><td><input id="date" name="date" type="text" th:field="*{date}" /></td>
 		</tr>
 	</table>
-	<button id="submit" type="button">Submit</button>
+	<button id="submit" type="submit">Submit</button>
+	
+	<ul th:if="${#fields.hasErrors('*')}" class="erreur">
+		<li th:each="err : ${#fields.errors('*')}" th:text="${err}">Une erreur est survenue</li>
+	</ul>
 </form>
 </body>
 </html>

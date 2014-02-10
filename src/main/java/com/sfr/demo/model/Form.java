@@ -6,7 +6,7 @@ public class Form {
     
     private String name;
     
-    private int age;
+    private String age;
     
     private Date date;
     
@@ -16,10 +16,10 @@ public class Form {
     public void setName(String name) {
         this.name = name;
     }
-    public int getAge() {
+    public String getAge() {
         return age;
     }
-    public void setAge(int age) {
+    public void setAge(String age) {
         this.age = age;
     }
     public Date getDate() {
