@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.sfr.demo.model.Form;
 import com.sfr.demo.validator.FormValidator;
@@ -25,7 +26,6 @@ import com.sfr.demo.validator.FormValidator;
  * Handles requests for the application home page.
  */
 @Controller
-@RequestMapping("/")
 public class HomeController {
     
     @Autowired
@@ -33,7 +33,7 @@ public class HomeController {
     
     private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
     
-    @RequestMapping("init.html")
+    @RequestMapping(value = "init", method = RequestMethod.GET)
     public String init(Model model) {
         model.addAttribute("ourForm", new Form());
         return "form";
@@ -43,7 +43,14 @@ public class HomeController {
     public void initDateBinder(final WebDataBinder binder) {
         final SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         dateFormat.setLenient(false);
-        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
+        CustomDateEditor customDateFormat;
+        try {
+            customDateFormat = new CustomDateEditor(dateFormat, false);
+            binder.registerCustomEditor(Date.class, customDateFormat);
+        } catch (IllegalArgumentException e) {
+            logger.error("{}", e);
+        }
+        
     }
     
 //    @InitBinder("form")
@@ -53,13 +60,15 @@ public class HomeController {
     
     
     
-    @RequestMapping(value = "submitForm.html", method = RequestMethod.POST)
-    public String handleFormSubmit(@ModelAttribute("ourForm") Form form, BindingResult bindingResult) {
+    @RequestMapping(value = "submitForm", method = RequestMethod.POST)
+    public ModelAndView handleFormSubmit(@ModelAttribute("ourForm") Form form, BindingResult bindingResult) {
+        ModelAndView mav = new ModelAndView("redirect:http://www.sfr.fr");
         formValidator.validate(form, bindingResult);
+        mav.addObject("ourForm", form);
         if(bindingResult.hasErrors()){
-            return "init.html";
+            mav.setViewName("form");
         }
-        return "redirect:http://www.sfr.fr";
+        return mav;
     }
     
 }

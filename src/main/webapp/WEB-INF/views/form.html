@@ -2,30 +2,35 @@
 <html lang="fr" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<title>Home in thymeleaf</title>
+<title>Home in thymeleaf</title>
 </head>
 <body>
-<h1>
-	Hey !
-</h1>
+	<h1>Hey !</h1>
 
-<form  action="#" th:object="${ourForm}" th:action="@{'submitForm.html'}" method="post">
-	<table>
-		<tr>
-			<td><label for="name">Enter a name : </label></td><td><input id="name" name="name" type="text" th:field="*{name}" /></td>
-		</tr>
-		<tr>
-			<td><label for="age">Enter your age : </label></td><td><input id="age" name="age" type="text" th:field="*{age}" /></td>
-		</tr>
-		<tr>
-			<td><label for="date">Enter some date : </label></td><td><input id="date" name="date" type="text" th:field="*{date}" /></td>
-		</tr>
-	</table>
-	<button id="submit" type="submit">Submit</button>
-	
-	<ul th:if="${#fields.hasErrors('*')}" class="erreur">
-		<li th:each="err : ${#fields.errors('*')}" th:text="${err}">Une erreur est survenue</li>
-	</ul>
-</form>
+	<form action="#" th:object="${ourForm}" th:action="@{'submitForm'}"
+		method="post">
+		<ul th:if="${#fields.hasErrors('*')}">
+			<li th:each="err : ${#fields.errors('*')}" th:text="${err}">Input is incorrect</li>
+		</ul>
+		<table>
+			<tr>
+				<td><label for="name">Enter a name : </label></td>
+				<td><input id="name" name="name" type="text" th:field="*{name}" /></td>
+				<td><p th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Incorrect date</p></td>
+			</tr>
+			<tr>
+				<td><label for="age">Enter your age : </label></td>
+				<td><input id="age" name="age" type="text" th:field="*{age}" /></td>
+				<td><p th:if="${#fields.hasErrors('age')}" th:errors="*{age}">Incorrect date</p></td>
+			</tr>
+			<tr>
+				<td><label for="date">Enter some date : </label></td>
+				<td><input id="date" name="date" type="text" th:field="*{date}" /></td>
+				<td><p th:if="${#fields.hasErrors('date')}" th:errors="*{date}">Incorrect date</p></td>
+			</tr>
+		</table>
+		<button id="submit" type="submit">Submit</button>
+
+	</form>
 </body>
 </html>

@@ -20,13 +20,13 @@ public class FormValidator implements Validator {
     public void validate(Object object, Errors errors) {
         Form form = (Form) object;
         if(StringUtils.isEmpty(form.getName())){
-            errors.rejectValue("name", "Come on man ! you need to put some name");
+            errors.rejectValue("name", "name.error");
         }
         if(!NumberUtils.isDigits(form.getAge())){
-            errors.rejectValue("age", "WTF! Age must be a set of valid digits!");
+            errors.rejectValue("age", "age.error");
         }
         if(form.getDate() == null){
-            errors.rejectValue("date", "Yo ! the date should respect this format : dd-MM-yyyy capice");
+            errors.rejectValue("date", "date.error");
         }
         
     }
