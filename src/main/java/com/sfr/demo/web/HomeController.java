@@ -29,9 +29,6 @@ import com.sfr.demo.excpetion.FunctionalException;
 import com.sfr.demo.model.Form;
 import com.sfr.demo.validator.FormValidator;
 
-/**
- * Handles requests for the application home page.
- */
 @Controller
 public class HomeController {
     
@@ -78,11 +75,10 @@ public class HomeController {
         if (bindingResult.hasErrors()) {
             mav.setViewName("form");
         }else if(Integer.parseInt(form.getAge()) >= 100){
-            throw new FunctionalException(new ErrorDetail("age", "GrandPas shouldn't use internet"));
+            throw new FunctionalException(new ErrorDetail("age", "GranPaS shouldn't use internet"));
         }
         
         //if valid form
-        model.addAttribute("name", form.getName());
         request.setAttribute("age", form.getAge());
         return mav;
     }
